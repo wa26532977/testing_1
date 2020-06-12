@@ -1,0 +1,45 @@
+{% extends "app1/base.html" %}
+{% load static %}
+{% block body_block %}
+    <div class="jumbotron">
+        {% if registered %}
+            <h1>Thank you for registering!</h1>
+        {% else %}
+            <h1>Register Here!</h1>
+            <h3>Fill out the Form:</h3>
+
+            <form class="form-group" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+{#                {{ user_form.as_p }}#}
+                {% for field in user_form %}
+                    <div class="form-group">
+                        <div class="col-md-2">{{ field.label_tag }}</div>
+                        {{ field.errors }}
+                        <div class="col-md-10 pull-left">
+                        {{ field }}
+                        </div>
+                        {% if field.help_text %}
+                          <small id="emailHelp" class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                    </div>
+                 {% endfor %}
+{#                {{ profile_form.as_p }}#}
+                {% for field in profile_form %}
+                    <div class="row">
+                       <div class="col-md-2">
+                        {{ field.label_tag }}
+                        {% if field.help_text %}
+                          <sup>{{ field.help_text }}</sup>
+                        {% endif %}
+                        {{ field.errors }}
+                       </div><div class="col-md-10 pull-left">
+                         {{ field }}
+                       </div>
+                    </div>
+                 {% endfor %}
+                <input type="submit" value="SUBMIT">
+            </form>
+
+        {% endif %}
+    </div>
+{% endblock %}
